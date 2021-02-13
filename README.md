@@ -1,6 +1,5 @@
-# STTWebApp
- Web Application that uses the tool "Vosk" to transcribe audios to texts in portuguese
-
+# ChordsWebApp
+ Web Application to automatic musical Chords and Lyrics Transcription
  ---
  
  ## Enviroment
@@ -21,7 +20,7 @@ Website: http://localhost:5000
 
 ## Screenshot
 
-![image](https://user-images.githubusercontent.com/45243859/103008940-a8e25600-4514-11eb-98ae-aa0706626fb0.png)
+![image](https://user-images.githubusercontent.com/45243859/107436724-b37c9d00-6b0c-11eb-8a97-cf3a386ca2b9.png)
 
 
 ## Structure
