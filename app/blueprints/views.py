@@ -73,6 +73,15 @@ def init_app(app):
         os.system("python app/STT/Vosk/transcribe.py app/static/audio.wav")
         return send_file("../Transcrição.txt", as_attachment=True, cache_timeout=0)
     
+    @app.route('/acordes', methods=['GET', 'POST'])
+    def acordes():
+        os.chdir("D:/GitHub/ChordsWebApp/vocal-remover-master/")
+        os.system("python inference.py --input D:/GitHub/ChordsWebApp/app/static/audio.wav")
+        os.replace("D:/GitHub/ChordsWebApp/vocal-remover-master/audio_Instruments.wav", "D:/GitHub/ChordsWebApp/audio_Instruments.wav")
+        os.replace("D:/GitHub/ChordsWebApp/vocal-remover-master/audio_Vocals.wav", "D:/GitHub/ChordsWebApp//audio_Vocals.wav")
+        os.chdir("D:/GitHub/ChordsWebApp")
+        return render_template("home.html")
+    
     @app.route('/gravacao', methods=['GET', 'POST'])
     def gravacao():
         return render_template("gravacao.html")
@@ -90,8 +99,3 @@ def init_app(app):
         audioFile.close()
         return speech_to_text()
 
-
-    @lm.unauthorized_handler
-    def unauthorized():
-        flash("Login Necessário")
-        return redirect(url_for('login'))
