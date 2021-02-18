@@ -1,25 +1,21 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, send_file, redirect
-from flask_login import login_user, logout_user, login_required
 from werkzeug.utils import secure_filename
 import os
 
-from app.ext.auth import lm
-
+from subprocess import Popen, PIPE
 from app.blueprints.forms import *
 from app.blueprints.functions import *
-from app.tables import *
 
 
 def init_app(app):
 
-    @lm.user_loader
     def load_user(id):
         return User.query.filter_by(id=id).first()
 
     @app.route('/')
     def index():
         try: 
-            transcricao = open('Transcrição.txt','r')
+            transcricao = open('Lyrics.txt','r')
             transcricao = transcricao.read()
         except:
             transcricao = ""
@@ -53,7 +49,6 @@ def init_app(app):
         return redirect(url_for('login'))
 
     @app.route('/solicitacao')
-    @login_required
     def solicitacao():
         return render_template("solicitacao.html")
     
@@ -75,16 +70,22 @@ def init_app(app):
     
     @app.route('/acordes', methods=['GET', 'POST'])
     def acordes():
-    #Separa Instrumental dos Vocais
-       # os.chdir("D:/GitHub/ChordsWebApp/vocal-remover-master/")
-      #  os.system("python inference.py --input D:/GitHub/ChordsWebApp/app/static/audio.wav")
-       # os.replace("D:/GitHub/ChordsWebApp/vocal-remover-master/audio_Instruments.wav", "D:/GitHub/ChordsWebApp/audio_Instruments.wav")
-      #  os.replace("D:/GitHub/ChordsWebApp/vocal-remover-master/audio_Vocals.wav", "D:/GitHub/ChordsWebApp/audio_Vocals.wav")
-      #  os.chdir("D:/GitHub/ChordsWebApp")
+        #Separa Instrumental dos Vocais
         separaVocais()
-        separaVersos()
 
-        return render_template("home.html")
+        #Separa os Vocais em Versos
+        iteracoes = separaVersos()
+        print("Numero de audios: ", iteracoes)
+
+        #Transcreve vocais com DeepSpeech
+        deepTranscreve(iteracoes)
+
+        try: 
+            transcricao = open('Lyrics.txt','r')
+            transcricao = transcricao.read()
+        except:
+            transcricao = ""
+        return render_template("home.html", transcricao=transcricao)
     
     @app.route('/gravacao', methods=['GET', 'POST'])
     def gravacao():

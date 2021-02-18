@@ -1,6 +1,5 @@
 import click
 from app.ext.database import db
-from app.tables import User
 
 
 def create_db():

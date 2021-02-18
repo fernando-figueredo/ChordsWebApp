@@ -1,5 +1,6 @@
 from pydub import AudioSegment
 from pydub.silence import split_on_silence
+from subprocess import Popen, PIPE
 import os
 
 
@@ -8,10 +9,12 @@ def separaVocais():
 #Separa Instrumental dos Vocais
     os.chdir("D:/GitHub/ChordsWebApp/vocal-remover-master/")
     os.system("python inference.py --input D:/GitHub/ChordsWebApp/app/static/audio.wav")
+    print("parou!!!")
+    print("Vocais separados!")
     os.replace("D:/GitHub/ChordsWebApp/vocal-remover-master/audio_Instruments.wav", "D:/GitHub/ChordsWebApp/audio_Instruments.wav")
     os.replace("D:/GitHub/ChordsWebApp/vocal-remover-master/audio_Vocals.wav", "D:/GitHub/ChordsWebApp/audio_Vocals.wav")
     os.chdir("D:/GitHub/ChordsWebApp")
-    print("Vocais separados!")
+    
     
 def separaVersos():
     #Separa os Vocais por Versos
@@ -52,3 +55,15 @@ def separaVersos():
             format = "wav"
         )
     print("Versos separados!")
+    return (i)
+
+def deepTranscreve(i):
+    os.chdir("D:/GitHub/ChordsWebApp/")
+    for j in range(i):
+        stdout= Popen("deepspeech --model deepspeech/deepspeech-0.9.3-models.pbmm --scorer deepspeech/deepspeech-0.9.3-models.scorer --audio versos/verso_" + str(j) + ".wav", shell=True, stdout=PIPE).stdout
+        output=stdout.read()
+        print(output)
+        with open("Lyrics.txt", "a+") as text_file:
+            text_file.write("\n" + str(output))
+    print("Transcrição dos vocais finalizada!")
+

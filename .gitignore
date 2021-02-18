@@ -1,2 +1,4 @@
 
 *.pyc
+deepspeech/deepspeech-0.9.3-models.scorer
+deepspeech/deepspeech-0.9.3-models.pbmm
