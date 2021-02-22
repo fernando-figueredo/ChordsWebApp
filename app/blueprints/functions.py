@@ -1,5 +1,5 @@
 from pydub import AudioSegment
-from pydub.silence import split_on_silence
+from pydub.silence import split_on_silence, detect_silence
 from subprocess import Popen, PIPE
 import os
 
@@ -16,7 +16,7 @@ def separaVocais():
     os.chdir("D:/GitHub/ChordsWebApp")
     
     
-def separaVersos():
+def cortaVocais():
     #Separa os Vocais por Versos
     # Define a function to normalize a chunk to a target amplitude.
     def match_target_amplitude(aChunk, target_dBFS):
@@ -66,4 +66,39 @@ def deepTranscreve(i):
         with open("Lyrics.txt", "a+") as text_file:
             text_file.write("\n" + str(output))
     print("Transcrição dos vocais finalizada!")
+    try: 
+        transcricao = open('Lyrics.txt','r')
+        transcricao = transcricao.read()
+    except:
+        transcricao = ""
 
+def cortaInstrumental():
+    song = AudioSegment.from_wav("audio_Vocals.wav")
+
+    print("Carregou musica!")
+
+    chunks = detect_silence(song, min_silence_len=400, silence_thresh=-45, seek_step=1)
+
+    instrumental = AudioSegment.from_wav("audio_Instruments.wav")
+    #lista do instrumental separado
+    acomp=[]
+
+    for i in range (len(chunks)):
+        for j in range (2):
+            if j == 0:
+                ji=1 # ji = j invertido
+            else:
+                ji=0
+  
+            try:
+                #recorta o instrumental referentes aos silencios e aos versos intercaladamente
+                acomp.append(instrumental[(chunks[i][j]):(chunks[i+j][ji])])
+
+                print("Exportando instrumental_{0}.wav".format(2*i+j))
+                acomp[(2*i)+j].export(
+                    "./instrumental/instrumental_{0}.wav".format(2*i+j),
+                    bitrate = "16",format = "wav"
+                    )
+            
+            except:
+                print("Instrumental Separado!")

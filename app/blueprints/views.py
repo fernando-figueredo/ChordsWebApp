@@ -70,21 +70,20 @@ def init_app(app):
     
     @app.route('/acordes', methods=['GET', 'POST'])
     def acordes():
+        
         #Separa Instrumental dos Vocais
         separaVocais()
 
         #Separa os Vocais em Versos
-        iteracoes = separaVersos()
+        iteracoes = cortaVocais()
         print("Numero de audios: ", iteracoes)
 
         #Transcreve vocais com DeepSpeech
         deepTranscreve(iteracoes)
 
-        try: 
-            transcricao = open('Lyrics.txt','r')
-            transcricao = transcricao.read()
-        except:
-            transcricao = ""
+        #Separa Instrumental em Versos
+        cortaInstrumental()
+
         return render_template("home.html", transcricao=transcricao)
     
     @app.route('/gravacao', methods=['GET', 'POST'])
