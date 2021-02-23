@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, send_file, redirect
 from werkzeug.utils import secure_filename
 import os
+import pac
 
 from subprocess import Popen, PIPE
 from app.blueprints.forms import *
@@ -61,6 +62,7 @@ def init_app(app):
         if request.method == 'POST':
             f = request.files['file']
             f.save('app/static/audio.wav')
+            pac.convert_wav_to_16bit_mono("app/static/audio.wav", "app/static/audio.wav")
             return redirect("/")
 
     @app.route('/transcreve', methods=['GET', 'POST'])
@@ -70,7 +72,6 @@ def init_app(app):
     
     @app.route('/acordes', methods=['GET', 'POST'])
     def acordes():
-        
         #Separa Instrumental dos Vocais
         separaVocais()
 
@@ -83,8 +84,14 @@ def init_app(app):
 
         #Separa Instrumental em Versos
         cortaInstrumental()
+        
+        #Trnascreve o acompanhamento
+        chordsTranscreve(iteracoes)
 
-        return render_template("home.html", transcricao=transcricao)
+        transcricao = open('Lyrics.txt','r')
+        transcricao = transcricao.read()
+
+        return render_template("home.html",transcricao=transcricao)
     
     @app.route('/gravacao', methods=['GET', 'POST'])
     def gravacao():

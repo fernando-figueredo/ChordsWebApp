@@ -2,6 +2,7 @@ from pydub import AudioSegment
 from pydub.silence import split_on_silence, detect_silence
 from subprocess import Popen, PIPE
 import os
+import pac
 
 
 # Funções 
@@ -64,7 +65,8 @@ def deepTranscreve(i):
         output=stdout.read()
         print(output)
         with open("Lyrics.txt", "a+") as text_file:
-            text_file.write("\n" + str(output))
+            text_file.write(str(output))
+            text_file.write("\n")
     print("Transcrição dos vocais finalizada!")
     try: 
         transcricao = open('Lyrics.txt','r')
@@ -99,6 +101,15 @@ def cortaInstrumental():
                     "./instrumental/instrumental_{0}.wav".format(2*i+j),
                     bitrate = "16",format = "wav"
                     )
-            
+             
             except:
                 print("Instrumental Separado!")
+
+def chordsTranscreve(i):
+    for j in range(i):
+        os.chdir("D:/GitHub/ChordsWebApp/")
+        #Converte a taxa de amostragem do áudio para 16Kb mono
+        pac.convert_wav_to_16bit_mono("instrumental/instrumental_" +str(j)+ ".wav", "instrumental/instrumental_" +str(j)+ ".wav")
+        os.chdir("chords")
+        os.system("python split.py D:/GitHub/Testes/Chords/instrumental/instrumental_" + str(j) + ".wav")
+    os.replace("chords.txt", "D:/GitHub/ChordsWebApp/chords.txt")
