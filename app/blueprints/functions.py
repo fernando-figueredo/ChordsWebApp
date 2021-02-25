@@ -1,3 +1,4 @@
+from flask import send_file
 from pydub import AudioSegment
 from pydub.silence import split_on_silence, detect_silence
 from subprocess import Popen, PIPE
@@ -61,10 +62,10 @@ def cortaVocais():
 def deepTranscreve(i):
     os.chdir("D:/GitHub/ChordsWebApp/")
     for j in range(i):
-        stdout= Popen("deepspeech --model deepspeech/deepspeech-0.9.3-models.pbmm --scorer deepspeech/deepspeech-0.9.3-models.scorer --audio versos/verso_" + str(j) + ".wav", shell=True, stdout=PIPE).stdout
+        stdout= Popen("deepspeech --model deepspeech/portugues.pb --scorer deepspeech/portugues.scorer --audio versos/verso_" + str(j) + ".wav", shell=True, stdout=PIPE).stdout
         output=stdout.read()
         print(output)
-        with open("Lyrics.txt", "a+") as text_file:
+        with open("lyrics.txt", "a+") as text_file:
             text_file.write(str(output))
             text_file.write("\n")
     print("Transcrição dos vocais finalizada!")
@@ -104,6 +105,7 @@ def cortaInstrumental():
              
             except:
                 print("Instrumental Separado!")
+    return (2*i+j)
 
 def chordsTranscreve(i):
     for j in range(i):
@@ -113,3 +115,64 @@ def chordsTranscreve(i):
         os.chdir("chords")
         os.system("python split.py D:/GitHub/Testes/Chords/instrumental/instrumental_" + str(j) + ".wav")
     os.replace("chords.txt", "D:/GitHub/ChordsWebApp/chords.txt")
+
+def formataCifra():
+    os.chdir('D:/GitHub/ChordsWebApp')
+    try:
+        os.remove("cifra_final.txt")
+    except:
+        print("nada acontece feijoada")
+
+    chords = open ('chords.txt','r')
+    chords = chords.read()
+    acordes = chords.split('\n')
+
+    print(acordes[2*0+1])
+
+    #remove acordes iguais consecutivos
+    for a in range (len(acordes)):
+
+        acordes[a] = acordes[a].split(' ')
+
+        acordes[a].reverse()
+        for z in range(len(acordes[a])-1):
+            if acordes[a][z] == acordes[a][z+1]:
+                acordes[a][z] = '  '
+        acordes[a].reverse()
+
+    lyrics = open ('lyrics.txt','r')
+    lyrics = lyrics.read()
+    letra = lyrics.split('\n')
+
+    print(letra[0])
+
+    #Intercala Cifra e Letra
+    cifra = open ('cifra.txt','a')
+    cifra.write('\t\t\t\t\tCIFRA:')
+    cifra.write('\n \n \n')
+    cifra.write(str(acordes[0]))
+    cifra.write('\n')
+    cifra.write('(introdução)' + '\n \n') 
+    for x in range (26):
+        cifra = open ('cifra.txt','a')
+        cifra.write(' \n ' + str(acordes[2*x+1]) +' ' + str(acordes[2*x+2]))
+        cifra.write(' \n ' + letra[x] + '\n')
+        cifra.close()
+
+    cifra = open ('cifra.txt','r')
+    cifra = cifra.read()
+
+    cifra = cifra.replace("b'","")
+    cifra = cifra.replace("'","")
+    cifra = cifra.replace("[","")
+    cifra = cifra.replace("]","")
+    cifra = cifra.replace(",","")
+    cifra = cifra.replace("\\n ","")
+    cifra = cifra.replace("\r ","")
+    cifra = cifra.replace("\\r ","")
+
+    cifra_f = open('cifra_final.txt', 'w')
+    cifra_f.write(cifra)
+    cifra_f.close()
+    os.remove("cifra.txt")
+    

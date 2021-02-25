@@ -2,3 +2,10 @@
 *.pyc
 deepspeech/deepspeech-0.9.3-models.scorer
 deepspeech/deepspeech-0.9.3-models.pbmm
+*.scorer
+*.pbmm
+*.pb
+*.wav
+*.wav
+*.wav
+instrumental/instrumental_0.wav

@@ -15,11 +15,15 @@ def init_app(app):
 
     @app.route('/')
     def index():
-        try: 
-            transcricao = open('Lyrics.txt','r')
+
+        os.chdir('D:/GitHub/ChordsWebApp')
+        try:
+            transcricao = open('cifra_final.txt','r')
             transcricao = transcricao.read()
         except:
             transcricao = ""
+      
+            
         return render_template("home.html", transcricao=transcricao)
 
     @app.route('/login', methods=['GET', 'POST'])
@@ -43,11 +47,6 @@ def init_app(app):
 
         return render_template("login.html", form=form)
 
-    @app.route("/logout")
-    def logout():
-        logout_user()
-        flash("Logout Realizado.")
-        return redirect(url_for('login'))
 
     @app.route('/solicitacao')
     def solicitacao():
@@ -65,11 +64,6 @@ def init_app(app):
             pac.convert_wav_to_16bit_mono("app/static/audio.wav", "app/static/audio.wav")
             return redirect("/")
 
-    @app.route('/transcreve', methods=['GET', 'POST'])
-    def transcreve():
-        os.system("python app/STT/Vosk/transcribe.py app/static/audio.wav")
-        return send_file("../Transcrição.txt", as_attachment=True, cache_timeout=0)
-    
     @app.route('/acordes', methods=['GET', 'POST'])
     def acordes():
         #Separa Instrumental dos Vocais
@@ -81,32 +75,17 @@ def init_app(app):
 
         #Transcreve vocais com DeepSpeech
         deepTranscreve(iteracoes)
-
-        #Separa Instrumental em Versos
-        cortaInstrumental()
         
-        #Trnascreve o acompanhamento
-        chordsTranscreve(iteracoes)
+        #Separa Instrumental em Versos
+        instrumental = cortaInstrumental()
+        
+        #Transcreve o acompanhamento
+        chordsTranscreve(instrumental)
 
-        transcricao = open('Lyrics.txt','r')
-        transcricao = transcricao.read()
+        #Junto tudo em uma Cifra
+        formataCifra()
 
-        return render_template("home.html",transcricao=transcricao)
-    
-    @app.route('/gravacao', methods=['GET', 'POST'])
-    def gravacao():
-        return render_template("gravacao.html")
-    
-    @app.route('/save-record', methods=['POST'])
-    def save_record():
-        app.logger.debug(request.files['file'].filename) 
-        return render_template("gravacao.html")
-    
-    @app.route('/uploads', methods=['POST'])
-    def save_audio():
-        rawAudio = request.get_data()
-        audioFile = open('RecordedFile.wav', 'wb')
-        audioFile.write(rawAudio)
-        audioFile.close()
-        return speech_to_text()
+        os.chdir('D:/GitHub/ChordsWebApp')
+        return send_file('../cifra_final.txt', as_attachment=True, cache_timeout=0)
+
 
