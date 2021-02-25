@@ -66,6 +66,10 @@ def init_app(app):
 
     @app.route('/acordes', methods=['GET', 'POST'])
     def acordes():
+
+        idioma = request.form['idiomaSelec']
+        nomemusica = request.form['musicName']
+         
         #Separa Instrumental dos Vocais
         separaVocais()
 
@@ -74,18 +78,18 @@ def init_app(app):
         print("Numero de audios: ", iteracoes)
 
         #Transcreve vocais com DeepSpeech
-        deepTranscreve(iteracoes)
+        deepTranscreve(iteracoes, idioma)
         
         #Separa Instrumental em Versos
         instrumental = cortaInstrumental()
         
         #Transcreve o acompanhamento
         chordsTranscreve(instrumental)
-
+        
         #Junto tudo em uma Cifra
-        formataCifra()
-
+        formataCifra(nomemusica)
+        
         os.chdir('D:/GitHub/ChordsWebApp')
-        return send_file('../cifra_final.txt', as_attachment=True, cache_timeout=0)
+        return send_file('../'+nomemusica+'_cifra.txt', as_attachment=True, cache_timeout=0)
 
 
