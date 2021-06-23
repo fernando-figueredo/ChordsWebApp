@@ -7,6 +7,12 @@ import pac
 
 
 # Funções 
+def baixaYoutube():
+    print("Baixando do youtube...")
+
+#Baixa a música a partir do Youtube ID
+
+
 def separaVocais():
 #Separa Instrumental dos Vocais
     os.chdir("D:/GitHub/ChordsWebApp/vocal-remover-master/")

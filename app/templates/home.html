@@ -10,7 +10,12 @@
       <h1 class="display-4">Transcrição Musical</h1>
       <hr class="my-4">
 
-      <a class="btn btn-info btn-lg" href="/upload" role="button">Enviar áudio</a>
+      <div class="row">
+        <div class="col-sm-4">
+          <a class="btn btn-info btn-lg" href="/upload" role="button">Enviar áudio</a>
+          <a class="btn btn-info btn-lg" href="/video" role="button">Vídeo</a>
+        </div>
+    </div>
 
     </br>
     </br>
@@ -18,7 +23,7 @@
 
     <div class="col-4">
 
-        <select class="custom-select mr-sm-2" name="idiomaSelec">
+        <select class="form-control form-control-lg" name="idiomaSelec">
           <option selected>Selecione o Idioma</option>
           <option value="portugues">Português</option>
           <option value="english">Inglês</option>
@@ -27,8 +32,8 @@
       </br>
     </br>
 
-        <label>Digite o nome da música:</label>
-        <input type="text" class="form-control" name="musicName">
+    <label for="inputsongname" class="col-form-label col-form-label-lg">Digite o Nome da Música: </label>
+        <input type="text" class="form-control form-control-lg" name="musicName" id="inputsongname" placeholder="Nome da Música">
 
     </div>
 
@@ -41,6 +46,5 @@
   </div>
 
 </form>
-  </br>
 
 {% endblock %}

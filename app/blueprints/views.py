@@ -15,46 +15,17 @@ def init_app(app):
 
     @app.route('/')
     def index():
+    
+        return render_template("home.html")
 
-        os.chdir('D:/GitHub/ChordsWebApp')
-        try:
-            transcricao = open('cifra_final.txt','r')
-            transcricao = transcricao.read()
-        except:
-            transcricao = ""
-      
-            
-        return render_template("home.html", transcricao=transcricao)
-
-    @app.route('/login', methods=['GET', 'POST'])
-    def login():
-        form = loginForm()
-
-        if form.validate_on_submit():
-            print(form.username.data)
-            print(form.password.data)
-            user = User.query.filter_by(username=form.username.data).first()
-            if user and user.password == form.password.data:
-                login_user(user, remember=form.rememberMe.data)
-                flash("Login realizado com Sucesso. Bem-Vindo(a) " + user.name)
-                return redirect(url_for('index'))
-
-            else:
-                flash("Usuário ou Senha Inválidos.")
-
-        else:
-            print(form.errors)
-
-        return render_template("login.html", form=form)
-
-
-    @app.route('/solicitacao')
-    def solicitacao():
-        return render_template("solicitacao.html")
     
     @app.route('/upload')
     def upload():
         return render_template("upload.html")
+
+    @app.route('/video')
+    def video():
+        return render_template("video.html")
 
     @app.route('/uploader', methods=['GET', 'POST'])
     def uploader():
