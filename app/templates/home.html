@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block content %}
-<form action="{{url_for('acordes')}}" id="transcreve-musica" method="POST">
+<form action="{{url_for('extract')}}" id="transcreve-musica" method="POST">
     <div class="container">
     <div class="jumbotron" id="texto-inicial">
       <h1 class="display-4">Transcrição Musical</h1>
@@ -32,16 +32,17 @@
       </br>
     </br>
 
-    <label for="inputsongname" class="col-form-label col-form-label-lg">Digite o Nome da Música: </label>
-        <input type="text" class="form-control form-control-lg" name="musicName" id="inputsongname" placeholder="Nome da Música">
-
+    <label for="inputsongname" class="col-form-label col-form-label-lg">Link do vídeo no youtube: </label>
+        <input type="text" class="form-control form-control-lg" name="musicName" id="inputsongname" placeholder="Link do Vídeo">
+      </br>
+     
     </div>
-
+    <button class="btn btn-info btn-lg" type="submit" target="_blank" href="/extract" role="button">Extrair Áudio</button>
   </br>
   </br>
   </br>
     <a type="button" class="btn btn-link" href="static/audio.wav" target="_blank">Reproduzir Áudio </a>
-    <button class="btn btn-primary btn-lg" type="submit" href="/acordes" target="_blank" role="button">Transcrever</button>
+    <button class="btn btn-primary btn-lg" type="submit" href="/extract" target="_blank" role="button">Transcrever</button>
   </div>
   </div>
 

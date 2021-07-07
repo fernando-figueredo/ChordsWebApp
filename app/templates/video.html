@@ -44,7 +44,7 @@
       //    The function indicates that when playing a video (state=1),
       //    the player should play for six seconds and then stop.
       function onPlayerStateChange(event) {
-        chordslist=['C','F','A','G','Am','Em',"Dm","Bm","D","E",'C','F']
+        chordslist=[' ','C','F','A','G','Am','Em',"Dm","Bm","D","E",'C','F']
         if(event.data==1) { // playing
             myTimer = setInterval(function(){ 
                 var time;
@@ -72,21 +72,20 @@
       
       </script>
 
-    <!-- <iframe src="https://www.youtube.com/embed/AhcttcXcRYY" allowfullscreen=""  height='360' width='640' frameborder="0"></iframe>-->
 <br>
 <br>
 <br>
 
     <div class="row">
         <div class="col-sm-3">
-            <h1 class="h5" id="Aesquerdo"></h1>
+            <h1 class="h3" id="Aesquerdo"></h1>
      
         </div>
         <div class="col-sm-2">
             <h1 class="h1 text-center font-weight-bold p-3 mb-4 bg-danger text-black" id="Acentral"><storng></storng></h1>
         </div>
         <div class="col-sm-3">
-            <h1 class="h5 text-right" id="Adireito"></h1>
+            <h1 class="h3 text-right" id="Adireito"></h1>
         </div>
     </div>  
 </div>
