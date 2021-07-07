@@ -70,10 +70,10 @@ def init_app(app):
             ydl.download([link])
         
         #Separa Instrumental dos Vocais
-        #separaVocais()
+        separaVocais()
 
         #Transcreve o acompanhamento
-        #chordsTranscreve()
+        chordsTranscreve()
 
         def get_id(url):
             u_pars = urlparse(url)
@@ -88,6 +88,7 @@ def init_app(app):
         print("ID do Video = ", linkid)
         return render_template("video.html", linkid=linkid)
 
+'''
     @app.route('/acordes', methods=['GET', 'POST'])
     def acordes():
 
@@ -115,4 +116,4 @@ def init_app(app):
         
         os.chdir('D:/GitHub/ChordsWebApp')
         return send_file('../'+nomemusica+'_cifra.txt', as_attachment=True, cache_timeout=0)
-
+'''
