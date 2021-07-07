@@ -1,15 +1,1 @@
-c c c c c c dm d d d dm d d dm d d dm dm dm dm dm dm dm d d bm bm bm bm bm bm bm bm bm bm dm dm dm dm dm dm dm d dm d dm bm
-d dm d dm d dm dm d d bm bm bm dm dm bm bm bm e
-bm bm d
-dm dm d d d dm d d dm
-d
-dm dm bm dm bm bm bm bm bm
-dm bm dm
-dm d dm d d d d d d
-d dm
-bm bm d bm bm bm bm dm c
-bm
-dm dm d d d dm d d dm d dm bm bm dm bm dm bm bm bm bm bm
-am dm
-f am am em am am am em em am am
-am am
+c c e e em em e e c em e f c g g g f em e e e c c am c c c e dm dm c em c em em c g em em c e e c dm c c c am c c am dm c g em e c am c g em e e c e e c c c e c am e c dm g g em e f c g em em c am e e e c c e c c c e dm c g em em c em c g em em f f e e c c f c c c c f dm c g em em f c g em g f em e e em c c am c c c c em c dm dm g e c em e e em c dm c c am c c c dm c c em c c g dm em c g e c c c dm c c c c c c c g em em c c c g g g g c g g dm g c f e dm c c c c c c c dm c g g g g dm c g g c c em em c em c c c c c c c dm dm g g dm g g c c c e em e e e c c e e em e e dm c g c em e e c g e em c em e em e c c c em em em e dm c g e e em e g c c e em c e e c c c c c c c dm dm c c c e dm c g em em c am e em dm c c c c c c am e dm dm dm dm g g e c e c em dm c c c c c c g em em c c c c em em c c e em c c c c c c c c f c g g em c c g g g c g c g g c c em c c dm c c c c c c c dm g g g g g dm c g g c c c c c c c c c c c c c c g g g dm g c em c c c dm c c c c c c c g c c c c c c dm dm g c c em c c c c c am c c c g g g g c c g c c c c em c em c c c c c c c c c g c c c c f f f c g c c c c c c c c dm c c c g g g g g dm g c dm g g g g dm c g c g g c g g em g g g g g g g g g g

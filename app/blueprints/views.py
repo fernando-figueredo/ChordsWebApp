@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from flask import Flask, render_template, request, redirect, url_for, flash, send_file, redirect
 from werkzeug.utils import secure_filename
+from urllib.parse import urlparse, parse_qs
 import os
 import pac
 
@@ -8,7 +9,6 @@ from subprocess import Popen, PIPE
 import youtube_dl
 from app.blueprints.forms import *
 from app.blueprints.functions import *
-
 
 def init_app(app):
 
@@ -25,7 +25,7 @@ def init_app(app):
     def upload():
         return render_template("upload.html")
 
-    @app.route('/video')
+    @app.route('/video', methods=['GET', 'POST'])
     def video():
         return render_template("video.html")
 
@@ -39,23 +39,55 @@ def init_app(app):
 
     @app.route('/extract', methods=['GET', 'POST'])
     def extract():
+        try:
+            os.remove('D:/GitHub/ChordsWebApp/app/static/audio.wav')
+        except:
+            print ("File not found") 
+
         link = request.form['musicName']
+
+        #Extrai musica do YouTube
+        baixaYoutube()
 
         ydl_opts = {
         'format': 'bestaudio/best',
         'postprocessors': [{
         'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'mp3',
+        'preferredcodec': 'wav',
         'preferredquality': '192',  
         }],
         }
 
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            info_dict = ydl.extract_info(link, download=False)
+            video_title = info_dict.get('title', None)
+
+        path = f'D:/GitHub/ChordsWebApp/app/static/audio.wav'
+
+        ydl_opts.update({'outtmpl':path})
+
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([link])
+        
+        #Separa Instrumental dos Vocais
+        #separaVocais()
 
-        return redirect("/")
+        #Transcreve o acompanhamento
+        #chordsTranscreve()
 
-'''
+        def get_id(url):
+            u_pars = urlparse(url)
+            quer_v = parse_qs(u_pars.query).get('v')
+            if quer_v:
+                return quer_v[0]
+            pth = u_pars.path.split('/')
+            if pth:
+                return pth[-1]
+        
+        linkid= get_id(link)
+        print("ID do Video = ", linkid)
+        return render_template("video.html", linkid=linkid)
+
     @app.route('/acordes', methods=['GET', 'POST'])
     def acordes():
 
@@ -76,12 +108,11 @@ def init_app(app):
         instrumental = cortaInstrumental()
         
         #Transcreve o acompanhamento
-        chordsTranscreve(instrumental)
+        chordsTranscreve()
         
         #Junto tudo em uma Cifra
         formataCifra(nomemusica)
         
         os.chdir('D:/GitHub/ChordsWebApp')
         return send_file('../'+nomemusica+'_cifra.txt', as_attachment=True, cache_timeout=0)
-'''
 

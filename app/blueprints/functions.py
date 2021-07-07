@@ -116,13 +116,12 @@ def cortaInstrumental():
                 print("Instrumental Separado!")
     return (2*i+j)
 
-def chordsTranscreve(i):
-    for j in range(i):
-        os.chdir("D:/GitHub/ChordsWebApp/")
-        #Converte a taxa de amostragem do áudio para 16Kb mono
-        pac.convert_wav_to_16bit_mono("instrumental/instrumental_" +str(j)+ ".wav", "instrumental/instrumental_" +str(j)+ ".wav")
-        os.chdir("chords")
-        os.system("python split.py D:/GitHub/Testes/Chords/instrumental/instrumental_" + str(j) + ".wav")
+def chordsTranscreve():
+    os.chdir("D:/GitHub/ChordsWebApp/")
+    #Converte a taxa de amostragem do áudio para 16Kb mono
+    pac.convert_wav_to_16bit_mono("D:/GitHub/ChordsWebApp/audio_Instruments.wav", "D:/GitHub/ChordsWebApp/audio_Instruments.wav")
+    os.chdir("chords")
+    os.system("python split.py D:/GitHub/ChordsWebApp/audio_Instruments.wav")
     os.replace("chords.txt", "D:/GitHub/ChordsWebApp/chords.txt")
 
 def formataCifra(nomemusica):
