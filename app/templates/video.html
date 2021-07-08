@@ -47,7 +47,7 @@
       //    The function indicates that when playing a video (state=1),
       //    the player should play for six seconds and then stop.
       function onPlayerStateChange(event) {
-        chordslist=[' ','C','F','A','G','Am','Em',"Dm","Bm","D","E",'C','F']
+        chordslist={{acordes|tojson}}
         if(event.data==1) { // playing
             myTimer = setInterval(function(){ 
                 var time;
@@ -55,13 +55,14 @@
                 $("#timeHolder").text(time);
                 console.log(time);
 
-                for (var i = 0; i<10; i++)
+                for (var i = 0; i<{{tam}}; i++)
                 {
-                if (time%20>2*i && time%20<2*(i+1))
+                if (time>0.5*i && time<0.5*(i+1))
                     {
-                    document.getElementById('Aesquerdo').innerHTML = chordslist[i];
-                    document.getElementById('Acentral').innerHTML = chordslist[i+1];
-                    document.getElementById('Adireito').innerHTML = chordslist[i+2];
+                    document.getElementById('Aesquerdo').innerHTML = chordslist[i-1];
+                    document.getElementById('Acentral').innerHTML = chordslist[i];
+                    document.getElementById('Adireito').innerHTML = chordslist[i+1];
+                    
                     }
                 }
 

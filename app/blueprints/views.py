@@ -46,6 +46,7 @@ def init_app(app):
 
         link = request.form['musicName']
 
+        '''
         #Extrai musica do YouTube
         baixaYoutube()
 
@@ -68,13 +69,13 @@ def init_app(app):
 
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([link])
-        
+               
         #Separa Instrumental dos Vocais
         separaVocais()
 
         #Transcreve o acompanhamento
         chordsTranscreve()
-
+        '''
         def get_id(url):
             u_pars = urlparse(url)
             quer_v = parse_qs(u_pars.query).get('v')
@@ -86,7 +87,27 @@ def init_app(app):
         
         linkid= get_id(link)
         print("ID do Video = ", linkid)
-        return render_template("video.html", linkid=linkid)
+
+        os.chdir('D:/GitHub/ChordsWebApp')
+        acordes = open ('chords.txt','r')
+        acordes = acordes.read()
+        acordes = acordes.split(' ')
+        acordes.reverse()
+
+        
+        for i in range (len(acordes)-1):
+            if acordes[i] == acordes[i+1]:
+                acordes[i] = '-'
+        
+
+        acordes.append('-')
+        acordes.reverse()
+
+        tam=len(acordes)
+        print (acordes)
+        print(tam)
+
+        return render_template("video.html", linkid=linkid, acordes=acordes, tam=tam)
 
 '''
     @app.route('/acordes', methods=['GET', 'POST'])
