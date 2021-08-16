@@ -75,7 +75,9 @@ def init_app(app):
 
         #Transcreve o acompanhamento
         chordsTranscreve()
+        
         '''
+        #Link
         def get_id(url):
             u_pars = urlparse(url)
             quer_v = parse_qs(u_pars.query).get('v')
@@ -89,6 +91,8 @@ def init_app(app):
         print("ID do Video = ", linkid)
 
         os.chdir('D:/GitHub/ChordsWebApp')
+
+        acordesUnicos = []
         acordes = open ('chords.txt','r')
         acordes = acordes.read()
         acordes = acordes.split(' ')
@@ -97,17 +101,27 @@ def init_app(app):
         
         for i in range (len(acordes)-1):
             if acordes[i] == acordes[i+1]:
-                acordes[i] = '-'
+                acordes[i] = '0'
+            else:
+                acordesUnicos.append(acordes[i])
+                acordes[i] = '1'
         
 
-        acordes.append('-')
+        acordes.append('1')
         acordes.reverse()
+        acordesUnicos.reverse()
+        acordes.pop(0)
+        acordes.pop(0)
+        acordes.pop(0)
 
+        p=0
         tam=len(acordes)
         print (acordes)
+        print(acordesUnicos)
         print(tam)
 
-        return render_template("video.html", linkid=linkid, acordes=acordes, tam=tam)
+
+        return render_template("video.html", linkid=linkid, acordes=acordes, tam=tam, acordesUnicos=acordesUnicos, p=p)
 
 '''
     @app.route('/acordes', methods=['GET', 'POST'])

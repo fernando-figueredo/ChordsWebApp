@@ -7,27 +7,15 @@
 <form action="{{url_for('extract')}}" id="transcreve-musica" method="POST">
     <div class="container">
     <div class="jumbotron" id="texto-inicial">
-      <h1 class="display-4">Transcrição Musical</h1>
+      <h1 class="display-4">Insira a URL do YouTube:</h1>
       <hr class="my-4">
-
-      <div class="row">
-        <div class="col-sm-4">
-          <a class="btn btn-info btn-lg" href="/upload" role="button">Enviar áudio</a>
-          <a class="btn btn-info btn-lg" href="/video" role="button">Vídeo</a>
-        </div>
-    </div>
-
-    </br>
-    </br>
-    </br>
 
     <div class="col-4">
 
       </br>
     </br>
 
-    <label for="inputsongname" class="col-form-label col-form-label-lg">Link do vídeo no youtube: </label>
-        <input type="text" class="form-control form-control-lg" name="musicName" id="inputsongname" placeholder="Link do Vídeo">
+        <input type="text" class="form-control form-control-lg" name="musicName" id="inputsongname" placeholder="URL do Vídeo do YouTube">
       </br>
      
     </div>

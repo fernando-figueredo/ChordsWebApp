@@ -87,7 +87,7 @@ class LongFileProfiler(PitchClassProfiler):
     def __init__(self, file_name):
         super().__init__(file_name)
         self.current_pointer = 0
-        self.window = self.frecuency() // 2
+        self.window = self.frecuency() * 2
         print(self.window)
 
     def get_profile(self):
