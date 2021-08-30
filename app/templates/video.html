@@ -47,7 +47,7 @@
       //    The function indicates that when playing a video (state=1),
       //    the player should play for six seconds and then stop.
       function onPlayerStateChange(event) {
-       chordslist={{acordes|tojson}}
+       chordslist={{listaBinaria|tojson}}
        uniquechords={{acordesUnicos|tojson}}
        //chordslist=[ '1', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '0', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '1', '0', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '1', '0', '1', '0', '1', '1', '1', '1', '1', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '0', '1', '1', '0', '0', '1', '1', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '0', '1']
         if(event.data==1) { // playing
@@ -101,59 +101,6 @@
             <h1 class="h3 text-right" id="Adireito"></h1>
         </div>
     </div> 
-
-    {% if 1 == 1 %}
-    <div id="containerC1" style= "position: absolute;
-                                    width: 100px;
-                                    height: 100px;
-">
-
-        <div id="halfclip1" style= "width: 50%;
-                                    height: 100%;
-                                    right: 0px;
-                                    position: absolute;
-                                    overflow: hidden;
-                                    transform-origin: left center;
-                                    animation: cliprotate 2s steps(2) infinite;
-                                    -webkit-animation: cliprotate 2s steps(2) infinite;">
-
-        <div class="halfcircle" id="clipped1" style= " width: 200%;
-                                                        animation: rotate 1s linear infinite;
-                                                        -webkit-animation: rotate 1s linear infinite;">
-            </div>
-        </div>
-        <div class="halfcircle" id="fixed1" style= "width: 100%;width: 100%;
-                                                    transform: rotate(135deg);  
-                                                    animation: showfixed 2s steps(2) infinite;
-                                                    -webkit-animation: showfixed 2s linear infinite;">
-        </div>
-    </div> 
-
-    {% else %}
-
-    <div id="containerC1" style= "position: absolute;
-    width: 100px;
-    height: 100px;
-    animation: colors 4s infinite;;">
-
-    <div id="halfclip1" style= "width: 50%;
-        height: 100%;
-        right: 0px;
-        position: absolute;
-        overflow: hidden;
-        transform-origin: left center;">
-
-    <div class="halfcircle" id="clipped1" style= " width: 200%;
-                            animation: rotate 1s linear infinite;">
-    </div>
-    </div>
-    <div class="halfcircle" id="fixed1" style= "width: 100%;width: 100%;
-                        transform: rotate(135deg);">
-    </div>
-    </div> 
-
-    {%endif%}
-
 
 
 </div>

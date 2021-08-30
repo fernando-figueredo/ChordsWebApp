@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from flask import Flask, render_template, request, redirect, url_for, flash, send_file, redirect
+from flask import Flask, render_template, request, redirect, url_for, flash, send_file
 from werkzeug.utils import secure_filename
 from urllib.parse import urlparse, parse_qs
 import os
@@ -12,33 +12,17 @@ from app.blueprints.functions import *
 
 def init_app(app):
 
-    def load_user(id):
-        return User.query.filter_by(id=id).first()
-
     @app.route('/')
     def index():
-    
         return render_template("home.html")
-
-    
-    @app.route('/upload')
-    def upload():
-        return render_template("upload.html")
 
     @app.route('/video', methods=['GET', 'POST'])
     def video():
         return render_template("video.html")
 
-    @app.route('/uploader', methods=['GET', 'POST'])
-    def uploader():
-        if request.method == 'POST':
-            f = request.files['file']
-            f.save('app/static/audio.wav')
-            pac.convert_wav_to_16bit_mono("app/static/audio.wav", "app/static/audio.wav")
-            return redirect("/")
-
     @app.route('/extract', methods=['GET', 'POST'])
     def extract():
+
         try:
             os.remove('D:/GitHub/ChordsWebApp/app/static/audio.wav')
         except:
@@ -89,66 +73,32 @@ def init_app(app):
         
         linkid= get_id(link)
         print("ID do Video = ", linkid)
-
+        
         os.chdir('D:/GitHub/ChordsWebApp')
+
+        arquivotxt = open ('chords.txt','r')
+        arquivotxt = arquivotxt.read()
+        arquivotxt = arquivotxt.rstrip('\n')
+        dicAcordes = arquivotxt.split(' ')
 
         acordesUnicos = []
-        acordes = open ('chords.txt','r')
-        acordes = acordes.read()
-        acordes = acordes.split(' ')
-        acordes.reverse()
-
-        
-        for i in range (len(acordes)-1):
-            if acordes[i] == acordes[i+1]:
-                acordes[i] = '0'
+        listaBinaria = []
+        for i in range (len(dicAcordes)-1):
+            if dicAcordes[i] != dicAcordes[i+1]:
+                acordesUnicos.append(dicAcordes[i])
+                listaBinaria.append('1')
             else:
-                acordesUnicos.append(acordes[i])
-                acordes[i] = '1'
+                listaBinaria.append('0')
+
+        #O ultimo sempre entra
+        acordesUnicos.append(dicAcordes[len(dicAcordes)-1])
         
-
-        acordes.append('1')
-        acordes.reverse()
-        acordesUnicos.reverse()
-        acordes.pop(0)
-        acordes.pop(0)
-        acordes.pop(0)
-
         p=0
-        tam=len(acordes)
-        print (acordes)
-        print(acordesUnicos)
-        print(tam)
+        tam=len(dicAcordes)
+        print ("Dicionario de acordes: ", dicAcordes)
+        print ("Acordes Unicos: ", acordesUnicos )
+        print ("Lista Binaria: ", listaBinaria)
 
 
-        return render_template("video.html", linkid=linkid, acordes=acordes, tam=tam, acordesUnicos=acordesUnicos, p=p)
+        return render_template("video.html", linkid=linkid, listaBinaria=listaBinaria, tam=tam, acordesUnicos=acordesUnicos, p=p)
 
-'''
-    @app.route('/acordes', methods=['GET', 'POST'])
-    def acordes():
-
-        #idioma = request.form['idiomaSelec']
-        #nomemusica = request.form['musicName']
-         
-        #Separa Instrumental dos Vocais
-        separaVocais()
-
-        #Separa os Vocais em Versos
-        iteracoes = cortaVocais()
-        print("Numero de audios: ", iteracoes)
-
-        #Transcreve vocais com DeepSpeech
-        deepTranscreve(iteracoes, idioma)
-        
-        #Separa Instrumental em Versos
-        instrumental = cortaInstrumental()
-        
-        #Transcreve o acompanhamento
-        chordsTranscreve()
-        
-        #Junto tudo em uma Cifra
-        formataCifra(nomemusica)
-        
-        os.chdir('D:/GitHub/ChordsWebApp')
-        return send_file('../'+nomemusica+'_cifra.txt', as_attachment=True, cache_timeout=0)
-'''
