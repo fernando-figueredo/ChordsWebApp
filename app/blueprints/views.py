@@ -32,27 +32,7 @@ def init_app(app):
 
         '''
         #Extrai musica do YouTube
-        baixaYoutube()
-
-        ydl_opts = {
-        'format': 'bestaudio/best',
-        'postprocessors': [{
-        'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'wav',
-        'preferredquality': '192',  
-        }],
-        }
-
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            info_dict = ydl.extract_info(link, download=False)
-            video_title = info_dict.get('title', None)
-
-        path = f'D:/GitHub/ChordsWebApp/app/static/audio.wav'
-
-        ydl_opts.update({'outtmpl':path})
-
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([link])
+        baixaYoutube(link)
                
         #Separa Instrumental dos Vocais
         separaVocais()
@@ -85,13 +65,19 @@ def init_app(app):
         listaBinaria = []
         for i in range (len(dicAcordes)-1):
             if dicAcordes[i] != dicAcordes[i+1]:
+                dicAcordes[i] = dicAcordes[i].capitalize()
                 acordesUnicos.append(dicAcordes[i])
                 listaBinaria.append('1')
             else:
                 listaBinaria.append('0')
 
         #O ultimo sempre entra
+        dicAcordes[len(dicAcordes)-1] = dicAcordes[len(dicAcordes)-1].capitalize()
         acordesUnicos.append(dicAcordes[len(dicAcordes)-1])
+
+        #Primeiras e ultiams posicoes como espaços em branco
+        acordesUnicos.insert(0,' ')
+        acordesUnicos.append(' ')
         
         p=0
         tam=len(dicAcordes)

@@ -105,6 +105,11 @@ footer span {
    -webkit-animation: showfixed 2s linear infinite;
 }
 
+iframe {
+  display: block;
+  margin: 0 auto;
+}
+
 @-webkit-keyframes cliprotate {
   0% {transform: rotate(0deg);}
   100% {transform: rotate(360deg);}

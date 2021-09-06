@@ -6,11 +6,12 @@
 {% block content %}
 <div class="container">
 <div class="jumbotron" id="texto-inicial">
-    <h1 class="display-4">Vídeo</h1>
+    <h1 class="display-4">Transcrição: </h1>
     <hr class="my-4">
 
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-        <div id="player"></div>
+        <div id="player">
+        </div>
 
     <script>
         // 2. This code loads the IFrame Player API code asynchronously.
@@ -47,7 +48,7 @@
       //    The function indicates that when playing a video (state=1),
       //    the player should play for six seconds and then stop.
       function onPlayerStateChange(event) {
-       chordslist={{listaBinaria|tojson}}
+       binarylist={{listaBinaria|tojson}}
        uniquechords={{acordesUnicos|tojson}}
        //chordslist=[ '1', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '0', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '1', '0', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '1', '0', '1', '0', '1', '1', '1', '1', '1', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '0', '1', '1', '0', '0', '1', '1', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '0', '1']
         if(event.data==1) { // playing
@@ -60,18 +61,42 @@
                 j=0
                 for (var i = 0; i<{{tam}}; i++)
                 {
+                    i2 = Math.trunc(time/2)
+
+                    if (binarylist[i2]==1){
+                        document.getElementById('duracao').innerHTML = '1'
+                    }
+
+                    else if (binarylist[i2]==0 && binarylist[i2+1]==1){
+                        document.getElementById('duracao').innerHTML = '2'
+                    }
+
+                    else if (binarylist[i2]==0 && binarylist[i2+1]==0 && binarylist[i2+2]==1){
+                        document.getElementById('duracao').innerHTML = '3'
+                    }
+
+                    else if (binarylist[i2]==0 && binarylist[i2+1]==0 && binarylist[i2+2]==0){
+                        document.getElementById('duracao').innerHTML = '3+'
+                    }
+
+
                     if (time>2*i && time<2*(i+1))
                         {
-                        document.getElementById('Aesquerdo').innerHTML = uniquechords[j-1];
-                        document.getElementById('Acentral').innerHTML = uniquechords[j];
-                        document.getElementById('Adireito').innerHTML = uniquechords[j+1];
+                        document.getElementById('Aesquerdo').innerHTML = uniquechords[j];
+                        document.getElementById('Acentral').innerHTML = uniquechords[j+1];
+                        document.getElementById('Adireito').innerHTML = uniquechords[j+2];
                         }
-                    if (chordslist[i]!=0){
+
+                    if (binarylist[i]!=0){
                         j=j+1
                     }
+
+
                 }
 
-            }, 100);
+
+            },
+            100);
 
 
         }
@@ -90,17 +115,20 @@
 <br>
 
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm">
             <h1 class="h3" id="Aesquerdo"></h1>
      
         </div>
-        <div class="col-sm-2">
-            <h1 class="h1 text-center font-weight-bold p-3 mb-4 bg-danger text-black" id="Acentral"><storng></storng></h1>
-        </div>
         <div class="col-sm-3">
+            <h1 class="display-2 text-center font-weight-bold p-3 mb-4 bg-danger text-black" id="Acentral"><storng></storng></h1>
+        </div>
+        <div class="col-sm">
             <h1 class="h3 text-right" id="Adireito"></h1>
         </div>
     </div> 
+
+    <br>
+    <h1 class="text-center" id="duracao"></h1>
 
 
 </div>

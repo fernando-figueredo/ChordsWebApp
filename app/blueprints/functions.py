@@ -2,15 +2,35 @@ from flask import send_file
 from pydub import AudioSegment
 from pydub.silence import split_on_silence, detect_silence
 from subprocess import Popen, PIPE
+import youtube_dl
 import os
 import pac
 
 
 # Funções 
-def baixaYoutube():
+def baixaYoutube(link):
     print("Baixando do youtube...")
 
-#Baixa a música a partir do Youtube ID
+    #Baixa a música a partir do Youtube ID
+    ydl_opts = {
+    'format': 'bestaudio/best',
+    'postprocessors': [{
+    'key': 'FFmpegExtractAudio',
+    'preferredcodec': 'wav',
+    'preferredquality': '192',  
+    }],
+    }
+
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        info_dict = ydl.extract_info(link, download=False)
+        video_title = info_dict.get('title', None)
+
+    path = f'D:/GitHub/ChordsWebApp/app/static/audio.wav'
+
+    ydl_opts.update({'outtmpl':path})
+
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([link])
 
 
 def separaVocais():
