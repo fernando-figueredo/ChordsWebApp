@@ -64,19 +64,52 @@
                     i2 = Math.trunc(time/2)
 
                     if (binarylist[i2]==1){
-                        document.getElementById('duracao').innerHTML = '1'
+                        if (Math.trunc(time)%2 == 1){
+                            document.getElementById('duracaobar').innerHTML = '0';
+                            document.getElementById('duracaobar').style["width"]="0%";
+                        }
+
+                        else {
+                            document.getElementById('duracaobar').innerHTML = '1';
+                            document.getElementById('duracaobar').style["width"]="12%";
+                        }
+                        
                     }
 
                     else if (binarylist[i2]==0 && binarylist[i2+1]==1){
-                        document.getElementById('duracao').innerHTML = '2'
+                        if (Math.trunc(time)%2 == 1){
+                            document.getElementById('duracaobar').innerHTML = '2';
+                            document.getElementById('duracaobar').style["width"]="24%";
+                        }
+
+                        else {
+                            document.getElementById('duracaobar').innerHTML = '3';
+                            document.getElementById('duracaobar').style["width"]="36%";
+                        }
                     }
 
                     else if (binarylist[i2]==0 && binarylist[i2+1]==0 && binarylist[i2+2]==1){
-                        document.getElementById('duracao').innerHTML = '3'
+                        if (Math.trunc(time)%2 == 1){
+                            document.getElementById('duracaobar').innerHTML = '4';
+                            document.getElementById('duracaobar').style["width"]="48%";
+                        }
+
+                        else {
+                            document.getElementById('duracaobar').innerHTML = '5';
+                            document.getElementById('duracaobar').style["width"]="60%";
+                        }
                     }
 
                     else if (binarylist[i2]==0 && binarylist[i2+1]==0 && binarylist[i2+2]==0){
-                        document.getElementById('duracao').innerHTML = '3+'
+                        if (Math.trunc(time)%2 == 1){
+                            document.getElementById('duracaobar').innerHTML = '6';
+                            document.getElementById('duracaobar').style["width"]="75%";
+                        }
+
+                        else {
+                            document.getElementById('duracaobar').innerHTML = '+6';
+                            document.getElementById('duracaobar').style["width"]="100%";
+                        }
                     }
 
 
@@ -128,7 +161,10 @@
     </div> 
 
     <br>
-    <h1 class="text-center" id="duracao"></h1>
+    <h1>Duração: </h1>
+    <div class="progress" style="height: 32px;">
+        <h4 class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" id="duracaobar">2</h4>
+    </div>
 
 
 </div>
