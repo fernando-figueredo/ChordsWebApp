@@ -30,7 +30,7 @@ def init_app(app):
 
         link = request.form['musicName']
         
-        '''
+        
         #Extrai musica do YouTube
         baixaYoutube(link)
                
@@ -39,7 +39,7 @@ def init_app(app):
 
         #Transcreve o acompanhamento
         chordsTranscreve()
-        '''
+        
 
         #Link
         def get_id(url):
