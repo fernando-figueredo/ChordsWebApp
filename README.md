@@ -18,10 +18,13 @@ Open in a Web browser
 Website: http://localhost:5000
 
 
-## Screenshot
+## Screenshots
 
-![image](https://user-images.githubusercontent.com/45243859/107436724-b37c9d00-6b0c-11eb-8a97-cf3a386ca2b9.png)
+Homepage:
+![chordswebapp1](https://user-images.githubusercontent.com/45243859/133005967-449d9182-e4c2-4ae5-8eae-688bb76eebb3.PNG)
 
+Transcription Page:
+![chordswebapp2](https://user-images.githubusercontent.com/45243859/133005969-e95e48ee-6621-49f2-902c-a77e997c99bf.PNG)
 
 ## Structure
 ```bash
