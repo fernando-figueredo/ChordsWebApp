@@ -1,6 +1,0 @@
-b'but i \r\n'
-b'footnote \r\n'
-b'but about save the baron jane\r\n'
-b'a union\r\n'
-b'diodoros\r\n'
-b'belladonna he now\r\n'

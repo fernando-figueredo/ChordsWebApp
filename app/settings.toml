@@ -1,8 +1,6 @@
 [default]
 FLASK_APP = app:app/app.py
 TITLE = "Transcrição de Áudio"
-SQLALCHEMY_DATABASE_URI ='sqlite:///storage_test.db'
-SECRET_KEY = "GT3DU1G3SRPFSP"
 SQLALCHEMY_TRACK_MODIFICATIONS = true
 
 [production]
