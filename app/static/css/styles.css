@@ -1,3 +1,11 @@
+#imageTeste{
+  display: none
+}
+
+span:hover + #imageTeste{
+  display: block;
+}
+
 #logo{
   height: 60px;
   padding-right: 30px;

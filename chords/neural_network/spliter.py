@@ -28,7 +28,7 @@ class Spliter():
     def save_split(self):
         chords = self.split_song()
         chords_string = " ".join(chords)
-        with open("chords.txt", "a") as f:
+        with open("chords.txt", "w") as f:
             f.write( chords_string )
             f.write("\n")
         print( "Split result saved in " + 'chords.txt' )

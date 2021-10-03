@@ -15,6 +15,7 @@ def init_app(app):
 
         try:
             os.remove('D:/GitHub/ChordsWebApp/app/static/audio.wav')
+            os.remove('D:/GitHub/ChordsWebApp/chords.txt')
         except:
             print ("File not found") 
 
