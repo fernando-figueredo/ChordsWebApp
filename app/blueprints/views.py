@@ -20,7 +20,7 @@ def init_app(app):
             print ("File not found") 
 
         link = request.form['musicName']
-        
+        '''
         #Extrai musica do YouTube
         baixaYoutube(link)
                
@@ -29,7 +29,7 @@ def init_app(app):
 
         #Transcreve o acompanhamento
         chordsTranscreve()
-
+        '''
         #Link
         linkid= get_id(link)
         print("ID do Video = ", linkid)
