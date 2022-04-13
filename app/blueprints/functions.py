@@ -31,6 +31,7 @@ def baixaYoutube(link):
 
 def separaVocais():
 #Separa Instrumental dos Vocais
+    print("Excluindo Vocais...")
     os.chdir("D:/GitHub/ChordsWebApp/vocal-remover-master/")
     os.system("python inference.py --input D:/GitHub/ChordsWebApp/app/static/audio.wav")
     print("parou!!!")
@@ -40,6 +41,7 @@ def separaVocais():
     os.chdir("D:/GitHub/ChordsWebApp")
     
 def chordsTranscreve():
+    print("Identificando acordes...")
     os.chdir("D:/GitHub/ChordsWebApp/")
     #Converte a taxa de amostragem do áudio para 16Kb mono
     pac.convert_wav_to_16bit_mono("D:/GitHub/ChordsWebApp/audio_Instruments.wav", "D:/GitHub/ChordsWebApp/audio_Instruments.wav")

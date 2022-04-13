@@ -12,7 +12,8 @@ def init_app(app):
 
     @app.route('/extract', methods=['GET', 'POST'])
     def extract():
-
+        
+        
         try:
             os.remove('D:/GitHub/ChordsWebApp/app/static/audio.wav')
             os.remove('D:/GitHub/ChordsWebApp/chords.txt')
@@ -20,16 +21,18 @@ def init_app(app):
             print ("File not found") 
 
         link = request.form['musicName']
+
         '''
         #Extrai musica do YouTube
         baixaYoutube(link)
                
         #Separa Instrumental dos Vocais
         separaVocais()
+        '''
 
         #Transcreve o acompanhamento
         chordsTranscreve()
-        '''
+        
         #Link
         linkid= get_id(link)
         print("ID do Video = ", linkid)

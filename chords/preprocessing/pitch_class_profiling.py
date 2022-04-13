@@ -87,8 +87,11 @@ class LongFileProfiler(PitchClassProfiler):
     def __init__(self, file_name):
         super().__init__(file_name)
         self.current_pointer = 0
+
+        #frecuency = 16K, ou seja, 2s = 32000
         self.window = self.frecuency() * 2
         print(self.window)
+
 
     def get_profile(self):
         profiles_list = []
@@ -101,6 +104,7 @@ class LongFileProfiler(PitchClassProfiler):
                 rigth_bound = samples_count - 1
 
             window_samples = self.samples()[self.current_pointer: rigth_bound]
+            print('WINDOW SAMPLES:', window_samples)
             X = fft(window_samples)
             profiles_list.append( self.pcp(X) )
 
