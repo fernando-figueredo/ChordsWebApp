@@ -22,14 +22,13 @@ def init_app(app):
 
         link = request.form['musicName']
 
-        '''
+        
         #Extrai musica do YouTube
         baixaYoutube(link)
                
         #Separa Instrumental dos Vocais
         separaVocais()
-        '''
-
+        
         #Transcreve o acompanhamento
         chordsTranscreve()
         
