@@ -47,7 +47,6 @@
       function onPlayerStateChange(event) {
        binarylist={{listaBinaria|tojson}}
        uniquechords={{acordesUnicos|tojson}}
-       beat={{beats|tojson}}
        //chordslist=[ '1', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '0', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '1', '0', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '1', '0', '1', '0', '1', '1', '1', '1', '1', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '0', '1', '1', '0', '0', '1', '1', '1', '0', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '0', '1']
         if(event.data==1) { // playing
             myTimer = setInterval(function(){ 
@@ -57,71 +56,71 @@
                 console.log(time);
 
                 j=0
-
-
                 for (var i = 0; i<{{tam}}; i++)
                 {
-                    
-                    if (time>beat[i] && time<beat[i+1])
+                    i2 = Math.trunc(time/2)
+
+                    if (binarylist[i2]==1){
+                        if (Math.trunc(time)%2 == 1){
+                            document.getElementById('duracaobar').innerHTML = '0';
+                            document.getElementById('duracaobar').style["width"]="0%";
+                        }
+
+                        else {
+                            document.getElementById('duracaobar').innerHTML = '1';
+                            document.getElementById('duracaobar').style["width"]="12%";
+                        }
+                        
+                    }
+
+                    else if (binarylist[i2]==0 && binarylist[i2+1]==1){
+                        if (Math.trunc(time)%2 == 1){
+                            document.getElementById('duracaobar').innerHTML = '2';
+                            document.getElementById('duracaobar').style["width"]="24%";
+                        }
+
+                        else {
+                            document.getElementById('duracaobar').innerHTML = '3';
+                            document.getElementById('duracaobar').style["width"]="36%";
+                        }
+                    }
+
+                    else if (binarylist[i2]==0 && binarylist[i2+1]==0 && binarylist[i2+2]==1){
+                        if (Math.trunc(time)%2 == 1){
+                            document.getElementById('duracaobar').innerHTML = '4';
+                            document.getElementById('duracaobar').style["width"]="48%";
+                        }
+
+                        else {
+                            document.getElementById('duracaobar').innerHTML = '5';
+                            document.getElementById('duracaobar').style["width"]="60%";
+                        }
+                    }
+
+                    else if (binarylist[i2]==0 && binarylist[i2+1]==0 && binarylist[i2+2]==0){
+                        if (Math.trunc(time)%2 == 1){
+                            document.getElementById('duracaobar').innerHTML = '6';
+                            document.getElementById('duracaobar').style["width"]="75%";
+                        }
+
+                        else {
+                            document.getElementById('duracaobar').innerHTML = '+6';
+                            document.getElementById('duracaobar').style["width"]="100%";
+                        }
+                    }
+
+
+                    if (time>2*i && time<2*(i+1))
                         {
                         document.getElementById('Aesquerdo').innerHTML = uniquechords[j];
                         document.getElementById('Acentral').innerHTML = uniquechords[j+1];
                         document.getElementById('Adireito').innerHTML = uniquechords[j+2];
-
-                        if (binarylist[i]==1)
-                        {
-                            if(time > beat[i]+(beat[i+1]-beat[i])*0.5){
-                            document.getElementById('duracaobar').innerHTML = '0';
-                            document.getElementById('duracaobar').style["width"]="0%";
-                            }
-
-                            else{
-                            document.getElementById('duracaobar').innerHTML = '1';
-                            document.getElementById('duracaobar').style["width"]="12%";
-                            }
                         }
-
-                        else if (binarylist[i]==0 && binarylist[i+1]==1)
-                        {
-                            if(time > beat[i]+(beat[i+1]-beat[i])*0.5){
-                            document.getElementById('duracaobar').innerHTML = '2';
-                            document.getElementById('duracaobar').style["width"]="24%";
-                            }
-
-                            else{
-                            document.getElementById('duracaobar').innerHTML = '3';
-                            document.getElementById('duracaobar').style["width"]="36%";
-                            }
-
-                        }
-
-                        else if (binarylist[i]==0 && binarylist[i+1]==0 && binarylist[i+2]==1){
-                            if(time > beat[i]+(beat[i+1]-beat[i])*0.5){
-                            document.getElementById('duracaobar').innerHTML = '4';
-                            document.getElementById('duracaobar').style["width"]="48%";
-                            }
-
-                            else{
-                            document.getElementById('duracaobar').innerHTML = '5';
-                            document.getElementById('duracaobar').style["width"]="60%";
-                            }
-                        }
-
-                        else{
-                            document.getElementById('duracaobar').innerHTML = '6';
-                            document.getElementById('duracaobar').style["width"]="72%";
-                        }
-                    
-
-
-                        document.getElementById("valor_i").innerHTML = i;
-                        document.getElementById("valor_j").innerHTML = j;
-                        }
-                    
 
                     if (binarylist[i]!=0){
                         j=j+1
                     }
+
 
                 }
 
@@ -162,11 +161,8 @@
         <h4 class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" id="duracaobar">2</h4>
     </div>
 
-    <h1>i: </h1>
-    <p id="valor_i"></p>
 
-    <h1>j: </h1>
-    <p id="valor_j"></p>
+
 
 </div>
 

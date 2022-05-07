@@ -2,6 +2,7 @@ from urllib.parse import urlparse, parse_qs
 import youtube_dl
 import os
 import pac
+import librosa, librosa.display
 
 
 # Funções 
@@ -43,11 +44,16 @@ def separaVocais():
 def chordsTranscreve():
     print("Identificando acordes...")
     os.chdir("D:/GitHub/ChordsWebApp/")
+
     #Converte a taxa de amostragem do áudio para 16Kb mono
     pac.convert_wav_to_16bit_mono("D:/GitHub/ChordsWebApp/audio_Instruments.wav", "D:/GitHub/ChordsWebApp/audio_Instruments.wav")
     os.chdir("chords")
     os.system("python split.py D:/GitHub/ChordsWebApp/audio_Instruments.wav")
     os.replace("chords.txt", "D:/GitHub/ChordsWebApp/chords.txt")
+
+    x, sr = librosa.load('D:/GitHub/ChordsWebApp/audio_Instruments.wav')
+    tempo, beats = librosa.beat.beat_track(x, sr=sr, start_bpm=60, units='time')
+    print(str(beats))
 
 def get_id(url):
     u_pars = urlparse(url)

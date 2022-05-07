@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import librosa, librosa.display
 from scipy.io import wavfile
 from scipy.fftpack import fft
 from math import log2
@@ -94,19 +95,26 @@ class LongFileProfiler(PitchClassProfiler):
 
 
     def get_profile(self):
+        x, sr = librosa.load(self.file_name)
+        tempo, beat_times = librosa.beat.beat_track(x, sr=sr, start_bpm=60, units='time')
+        print('Librosa Part:')
+        print(tempo)
+        print(beat_times)
+
+        with open("beats.txt", "w") as f:
+            f.write(str(beat_times))
+
         profiles_list = []
         samples_count = len( self.samples() )
+        
+        i=0
+        while i < len(beat_times)-1:
 
-        while self.current_pointer < samples_count:
-            rigth_bound =  self.current_pointer + self.window
-            
-            if rigth_bound >= samples_count:
-                rigth_bound = samples_count - 1
-
-            window_samples = self.samples()[self.current_pointer: rigth_bound]
-            print('WINDOW SAMPLES:', window_samples)
+            window_samples = self.samples()[int(16000*beat_times[i]): int(16000*beat_times[i+1])]
             X = fft(window_samples)
             profiles_list.append( self.pcp(X) )
 
             self.current_pointer += self.window
+
+            i=i+1
         return profiles_list
